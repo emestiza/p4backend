@@ -13,7 +13,6 @@ class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)  # allows anyone to register at this endpoint
     serializer_class = RegistrationSerializer
 
-    #new version
     def post(self, request):
         user = request.data.get('user', {})
         if not user:
@@ -28,24 +27,6 @@ class RegistrationAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # first version
-    """
-    def post(self, request):  # post instead of create bc inheriting method from APIView
-        user = request.data.get('user', {})  # empty {} bc by default object is empty; populate with acquired info
-        if not user:
-            user = {
-                "username": request.data.get('username'),  # req is dict, so accessing key username
-                "password": request.data.get("password")
-            }
-
-        # converting the data
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    """
-
 
 class LoginAPIView(APIView):
     permission_classes = (AllowAny,)  # COMMA IS A MUST to make it a tuple of one or more items
