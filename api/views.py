@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import generics  # contains filters so spec categories belong to spec users
+from rest_framework import generics  # contains filters so spec subject belong to spec users
 from rest_framework import viewsets
 from rest_framework.exceptions import (ValidationError, PermissionDenied)
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -9,7 +9,7 @@ from api.serializers import SubjectSerializer, TopicSerializer
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
-    # means user must be logged in to system to create a category
+    # means user must be logged in to system to create a subject
     permission_classes = (IsAuthenticated,)
 
     # convert data back and forth
@@ -22,7 +22,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        # check if the category already exists for the current logged in user
+        # check if the subject already exists for the current logged in user
         subject = Subject.objects.filter(
             name = request.data.get('name'),
             owner = request.user
@@ -38,12 +38,9 @@ class SubjectViewSet(viewsets.ModelViewSet):
         serializer.save(owner = self.request.user)
 
     def destroy(self, request, *args, **kwargs):  # perform destroy asks before deleting
-        print(request)
-        print(args)
-        print(kwargs)
-        # get category from URL
+        # get subject from URL
         subject = Subject.objects.get(pk = self.kwargs["pk"])
-        # if category doesn't belong to owner, then user is not allowed to delete category
+        # if subject doesn't belong to owner, then user is not allowed to delete subject
         if not request.user == subject.owner:
             # raise an error message
             raise PermissionDenied("You cannot delete this subject")
@@ -61,7 +58,8 @@ class SubjectTopic(generics.ListCreateAPIView):
     serializer_class = TopicSerializer
 
     def get_queryset(self):
-        # category_pk from URL
+        # print(self.kwargs.get("subject_pk"))
+        # subject_pk from URL
         # check if pk is in URL
         if self.kwargs.get("subject_pk"):
             # if it is in URL, get the key
@@ -81,7 +79,7 @@ class SingleSubjectTopic(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TopicSerializer
 
     def get_queryset(self):
-        # if id for category & id for recipe from URL both match database entries
+        # if id for subject & id for topic from URL both match database entries
         if self.kwargs.get("subject_pk") and self.kwargs.get("pk"):
             subject = Subject.objects.get(pk = self.kwargs["subject_pk"])
             queryset = Topic.objects.filter(

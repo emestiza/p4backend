@@ -30,6 +30,35 @@ Below are links to wireframes that show the application blueprint for mobile, ta
 - [Tablet](https://res.cloudinary.com/dssciwyew/image/upload/v1599931278/Tablet%20P4.png)
 - [Desktop](https://res.cloudinary.com/dssciwyew/image/upload/v1599931278/Desktop%20P4.png)
 
+Models
+
+```
+class Subject(models.Model):
+    class Meta:
+        verbose_name_plural = 'subjects'
+
+    name = models.CharField(max_length = 100)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    description = models.TextField(blank = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    def __str__(self):
+        return self.name
+
+class Topic(models.Model):
+    name = models.CharField(max_length = 100)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name = 'topics', on_delete = models.CASCADE)
+    description = models.TextField(blank = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    is_public = models.BooleanField(default = False)
+
+    def __str__(self):
+        return self.name
+```
+
 ## Time/Priority Matrix 
 
 Here is a full list of features that have been [prioritized](https://res.cloudinary.com/dssciwyew/image/upload/v1599935146/Priority%20Matrix%20Backend%20P4.png) using a `Time and Priority` Matix. 
@@ -52,6 +81,7 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
 #### PostMVP 
 
 - Filter data functionality
+- Abililty to share user public user links
 
 ## Functional Components
 

@@ -22,9 +22,9 @@ class Topic(models.Model):
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     subject = models.ForeignKey(Subject, related_name = 'topics', on_delete = models.CASCADE)
     description = models.TextField(blank = True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_public = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    is_public = models.BooleanField(default = False)
 
     def __str__(self):
         return self.name

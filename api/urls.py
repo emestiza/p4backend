@@ -11,8 +11,8 @@ router.register('topic', TopicViewSet, basename = 'topic')
 # ?P for parameter
 # \d+ accepts digits between 0 and 9
 custom_urlpatterns = [
-   url(r'subject/(?P<subject_pk>\d+)/topic$', SubjectTopic.as_view(), name = 'subject_topic'),
-   url(r'subject/(?P<subject_pk>\d+)/topic/(?P<pk>\d+)$', SubjectTopic.as_view(), name = 'single_subject_topic')
+    url(r'subject/(?P<subject_pk>\d+)/topic$', SubjectTopic.as_view(), name = 'subject_topic'),
+    url(r'subject/(?P<subject_pk>\d+)/topic/(?P<pk>\d+)$', SingleSubjectTopic.as_view(), name = 'single_subject_topic')
 ]
 
 urlpatterns = router.urls

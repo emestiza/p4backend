@@ -2,7 +2,7 @@ from rest_framework import serializers
 from api.models import Subject, Topic
 
 
-# referenced relationship should be above category class or else relationship won't be recognized
+# referenced relationship should be above subject class or else relationship won't be recognized
 class TopicSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source = 'owner.username')
 

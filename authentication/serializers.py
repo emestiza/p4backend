@@ -5,13 +5,13 @@ from .models import User
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
-        max_length=255,
-        min_length=8,
-        write_only=True
+        max_length = 255,
+        min_length = 8,
+        write_only = True
     )
 
     # cannot allow user to change JWT token
-    token = serializers.CharField(max_length=255, read_only=True)
+    token = serializers.CharField(max_length = 255, read_only = True)
 
     class Meta:
         model = User
