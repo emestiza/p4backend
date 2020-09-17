@@ -51,8 +51,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
-    'api.apps.ApiConfig',
-    'corsheaders'
+    'api.apps.ApiConfig'
 ]
 
 MIDDLEWARE = [
@@ -63,10 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'p4backend.urls'
 
@@ -98,6 +94,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
