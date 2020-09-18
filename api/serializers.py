@@ -5,10 +5,12 @@ from api.models import Subject, Topic
 # referenced relationship should be above subject class or else relationship won't be recognized
 class TopicSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source = 'owner.username')
+    subject_name = serializers.ReadOnlyField(source = 'subject.name')
+
 
     class Meta:
         model = Topic
-        fields = ('id', 'name', 'owner', 'subject', 'description', 'created_at', 'updated_at', 'is_public')
+        fields = ('id', 'name', 'owner', 'subject', 'subject_name', 'description', 'created_at', 'updated_at', 'is_public')
 
 
 class SubjectSerializer(serializers.ModelSerializer):
