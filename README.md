@@ -81,6 +81,7 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
 #### PostMVP 
 
 - Filter data functionality
+- Add course model
 - Abililty to share user public user links
 
 ## Functional Components
@@ -106,24 +107,37 @@ Based on the initial logic defined in the previous sections, the logic is broken
 | Component | Priority | Estimated Time | Time Invetsted | Actual Time |
 | --- | :---: |  :---: | :---: | :---: |
 | Filter data functionality| L | 2hrs | 0hrs | 0hrs|
-| Total | H | 2hrs| 0hrs | 0hrs |
+| Add course model| L | 2hrs | 0hrs | 0hrs|
+| Abililty to share user public user links| L | 2hrs | 0hrs | 0hrs|
+| Total | H | 6hrs| 0hrs | 0hrs |
 
 ## Additional Libraries
- Use this section to list all supporting libraries and thier role in the project. 
+No additional libraries were used.
 
 ## Code Snippet
 
-Use this section to include a brief code snippet of functionality that you are proud of an a brief description  
+This is a code snippet from serializers.py functionality. This controls how the fields in the frontend are rendered.   
 
 ```
-function reverse(string) {
-	// here is the code to reverse a string of text
-}
+class TopicSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source = 'owner.username')
+    subject_name = serializers.ReadOnlyField(source = 'subject.name')
+
+
+    class Meta:
+        model = Topic
+        fields = ('id', 'name', 'owner', 'subject', 'subject_name', 'description', 'created_at', 'updated_at', 'is_public')
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source = 'owner.username')  
+    topic = TopicSerializer(many = True, read_only = True, required = False)
+
+    class Meta:
+        model = Subject
+        fields = ('id', 'name', 'owner', 'topic', 'description','created_at', 'updated_at')
 ```
 
 ## Issues and Resolutions
- Use this section to list of all major issues encountered and their resolution.
-
-#### SAMPLE.....
-**ERROR**: app.js:34 Uncaught SyntaxError: Unexpected identifier                                
-**RESOLUTION**: Missing comma after first object in sources {} object
+**ERROR**: Creating users                                
+**RESOLUTION**: Password length had to be at least characters 
